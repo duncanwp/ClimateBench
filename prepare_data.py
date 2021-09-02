@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-
+Prepare the NorESM2 output by getting it directly from the http://noresg.nird.sigma2.no THREDDS server
 """
 
 from siphon import catalog
