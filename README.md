@@ -6,16 +6,16 @@ The processed training and validation data can be obtained from Zenodo: [10.5281
 
 ## Hackathon
 
-This benchmark dataset is currently being used for a hackathon during the NOAA AI [workshop](https://2021noaaaiworkshop.sched.com). **Test data used for evaluation of these submissions will be released upon it's conclusion.**
+This benchmark dataset is currently being used for a hackathon during the NOAA AI [workshop](https://2021noaaaiworkshop.sched.com). **Test data used for evaluation of these submissions will be released upon its conclusion.**
 
 We hope to keep a ranking of participating models on this page.
 
 ## Installation
-The example scripts provided here require [ESEm](https://github.com/duncanwp/ESEm) and a few other packages. It is recommended to first create a conda environment with iris:: 
+The example scripts provided here require [ESEm](https://github.com/duncanwp/ESEm) and a few other packages. It is recommended to first create a conda environment with iris::
 
     $ conda install -c conda-forge iris
 
-Then pip install the aditional requirements::
+Then pip install the additional requirements:
 
     $ pip install esem[gpflow,keras,scikit-learn] eofs
 
