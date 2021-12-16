@@ -2,11 +2,7 @@
 
 ClimateBench is a benchmark dataset for climate model emulation inspired by [WeatherBench](https://github.com/pangeo-data/WeatherBench). It consists of NorESM2 simulation outputs with associated forcing data processed in to a consistent format from a variety of experiments performed for CMIP6. Multiple ensemble members are included where available. 
 
-The processed training and validation data can be obtained from Zenodo: [10.5281/zenodo.5196512](https://doi.org/10.5281/zenodo.5196512).
-
-## Hackathon
-
-This benchmark dataset is currently being used for a hackathon during the NOAA AI [workshop](https://2021noaaaiworkshop.sched.com). **Test data used for evaluation of these submissions will be released upon its conclusion.**
+The processed training, validation and test data can be obtained from Zenodo: [10.5281/zenodo.5196512](https://doi.org/10.5281/zenodo.5196512).
 
 ## Leaderboard
 
