@@ -6,17 +6,19 @@ The processed training, validation and test data can be obtained from Zenodo: [1
 
 ## Leaderboard
 
-| Model | TAS RMSE (2050 / 2100) [K] | DTR RMSE (2050 / 2100) [K] | Pr RMSE (2050 / 2100) [mm/day] | P90 RMSE (2050 / 2100) [mm/day] | 
+The average root mean square error (RMSE) of the different baseline emulators for the years 2050-2100 against the ClimateBench task of estimating key climate variables under future scenario SSP245. Another state-of-the-art model (UKESM1) and the average RMSE between NorESM ensemble members as an estimate of internal variability are included for comparison.
+
+| Model | TAS RMSE [K] | DTR RMSE [K] | Pr RMSE [mm/day] | P90 RMSE [mm/day] | 
 |--------------------|----------------------------------|----------------------------|----------------------|------------------|
-| Baseline GP | 0.32 / 0.41 | 0.14 / 0.15 | 0.42 / 0.62 | 1.29 / 1.82 |
-| UNet | a / b | a / b | a /b | a /b |
-| Random Forest | a / b | a/ b | a /b | a /b |
-| UKESM | 1.71 / 2.70 | 1.17 / 1.34 | 0.59 / 0.82 | 1.77 / 2.48 |
-| (Variability) | 0.53 / 0.59 | 0.21 / 0.22 | 0.74 / 0.86 | 2.26 / 2.55 |
+| GP regression | 0.36 (CRPS: 0.33) | 0.15 (CRPS: 0.12) | 0.53 (CRPS: 0.42) | 1.54 (CRPS: 1.27) |
+| CNN+LSTM | 0.38 | 0.17 | 0.58 | 1.64 |
+| Random Forest | 0.42 | 0.15 | 0.53 | 1.54 |
+| UKESM | 2.20 | 1.28 | 0.89 | 2.57 |
+| (Variability) | 0.80 | 0.31 | 1.20 | 3.52 |
 
 
 ## Installation
-The example scripts provided here require [ESEm](https://github.com/duncanwp/ESEm) and a few other packages. It is recommended to first create a conda environment with iris::
+The example scripts provided here require [ESEm](https://github.com/duncanwp/ESEm) and a few other packages. It is recommended to first create a conda environment with iris or xarray::
 
     $ conda install -c conda-forge iris
 
