@@ -4,6 +4,8 @@ ClimateBench is a benchmark dataset for climate model emulation inspired by [Wea
 
 The processed training, validation and test data can be obtained from Zenodo: [10.5281/zenodo.5196512](https://doi.org/10.5281/zenodo.5196512).
 
+A pre-print of the paper describing ClimateBench and the baseline models can be found here: <https://www.essoar.org/doi/10.1002/essoar.10509765.2>
+
 ## Leaderboard
 
 The average root mean square error (RMSE) of the different baseline emulators for the years 2050-2100 against the ClimateBench task of estimating key climate variables under future scenario SSP245. Another state-of-the-art model (UKESM1) and the average RMSE between NorESM ensemble members as an estimate of internal variability are included for comparison.
