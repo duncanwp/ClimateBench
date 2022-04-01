@@ -3,7 +3,7 @@ import pandas as pd
 import xarray as xr
 from eofs.xarray import Eof
 # data_path = './data/train_val/'
-data_path = "F:\\Local Data\\ClimateBench\\"
+data_path = "CONFIGURE_ME"
 
 min_co2 = 0.
 max_co2 = 9500
@@ -30,6 +30,8 @@ def create_predictor_data(data_sets, n_eofs=5):
     """
         
     # Create training and testing arrays
+    if type(data_sets) == str:
+        data_sets = [data_sets]
     X = xr.concat([xr.open_dataset(data_path + f"inputs_{file}.nc") for file in data_sets], dim='time')
     X = X.assign_coords(time=np.arange(len(X.time)))
 
@@ -92,6 +94,8 @@ def get_test_data(file, eof_solvers, n_eofs=5):
 
 
 def create_predictdand_data(data_sets):
+    if type(data_sets) is str:
+        data_sets = [data_sets]
     Y = xr.concat([xr.open_dataset(data_path + f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
     # Convert the precip values to mm/day
     Y["pr"] *= 86400
