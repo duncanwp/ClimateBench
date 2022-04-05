@@ -72,8 +72,8 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     """
     Args:
         file str: name of datasets
-        n_eofs (int): number of eofs to create for aerosol variables
         eof_solvers (Eof_so2, Eof_bc): Fitted Eof objects to use for projection
+        n_eofs (int): number of eofs to create for aerosol variables
     """
 
     # Create training and testing arrays
@@ -98,7 +98,7 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     return inputs
 
 
-def create_predictdand_data(data_sets, test=True):
+def create_predictdand_data(data_sets, test=False):
     """
     Args:
         data_sets
