@@ -3,6 +3,7 @@
 *.tar
 *.gz
 *.out
+ClimateBench_Data
 
 # Dask
 dask-worker-space/
