@@ -2,8 +2,10 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 from eofs.xarray import Eof
-# data_path = './data/train_val/'
-data_path = "F:\\Local Data\\ClimateBench\\"
+
+import sys 
+sys.path.append('..')
+from path_parameters import TRAIN_PATH, TEST_PATH, OUTPUT_PATH
 
 min_co2 = 0.
 max_co2 = 9500
@@ -22,13 +24,18 @@ def un_normalize_ch4(data):
     return data * max_ch4
 
 
-def create_predictor_data(data_sets, n_eofs=5):
+# TODO we need a second version of this for non-random-forest methods
+def create_predictor_data(data_sets, n_eofs=5, test=False):
     """
     Args:
         data_sets list(str): names of datasets
         n_eofs (int): number of eofs to create for aerosol variables
+        test (bool): indicate if testing data should be created
     """
-        
+    if test:
+        data_path = TEST_PATH
+    else:
+        data_path = TRAIN_PATH
     # Create training and testing arrays
     X = xr.concat([xr.open_dataset(data_path + f"inputs_{file}.nc") for file in data_sets], dim='time')
     X = X.assign_coords(time=np.arange(len(X.time)))
@@ -68,10 +75,10 @@ def get_test_data(file, eof_solvers, n_eofs=5):
         n_eofs (int): number of eofs to create for aerosol variables
         eof_solvers (Eof_so2, Eof_bc): Fitted Eof objects to use for projection
     """
-        
+
     # Create training and testing arrays
-    X = xr.open_dataset(data_path + f"inputs_{file}.nc")
-        
+    X = xr.open_dataset(TEST_PATH + f"inputs_{file}.nc")
+
     so2_pcs = eof_solvers[0].projectField(X["SO2"], neofs=5, eofscaling=1)
     so2_df = so2_pcs.to_dataframe().unstack('mode')
     so2_df.columns = [f"SO2_{i}" for i in range(n_eofs)]
@@ -91,7 +98,17 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     return inputs
 
 
-def create_predictdand_data(data_sets):
+def create_predictdand_data(data_sets, test=True):
+    """
+    Args:
+        data_sets
+        test (bool): indicates if targets for test should be created
+    """
+    if test:
+        data_path = TEST_PATH
+    else:
+        data_path = TRAIN_PATH
+
     Y = xr.concat([xr.open_dataset(data_path + f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
     # Convert the precip values to mm/day
     Y["pr"] *= 86400
