@@ -30,7 +30,7 @@ def create_predictor_data(data_sets, n_eofs=5):
     """
         
     # Create training and testing arrays
-    if type(data_sets) == str:
+    if isinstance(data_sets, str):
         data_sets = [data_sets]
     X = xr.concat([xr.open_dataset(data_path + f"inputs_{file}.nc") for file in data_sets], dim='time')
     X = X.assign_coords(time=np.arange(len(X.time)))
@@ -44,7 +44,7 @@ def create_predictor_data(data_sets, n_eofs=5):
     so2_solver = Eof(X['SO2'])
     so2_eofs = so2_solver.eofsAsCorrelation(neofs=n_eofs)
     so2_pcs = so2_solver.pcs(npcs=n_eofs, pcscaling=1)
-#     print(bc_pcs.to_dataframe())
+
     # Convert to pandas
     bc_df = bc_pcs.to_dataframe().unstack('mode')
     bc_df.columns = [f"BC_{i}" for i in range(n_eofs)]
@@ -79,7 +79,7 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     so2_df.columns = [f"SO2_{i}" for i in range(n_eofs)]
 
     bc_pcs = eof_solvers[1].projectField(X["BC"], neofs=5, eofscaling=1)
-    bc_df = so2_pcs.to_dataframe().unstack('mode')
+    bc_df = bc_pcs.to_dataframe().unstack('mode')
     bc_df.columns = [f"BC_{i}" for i in range(n_eofs)]
 
     # Bring the emissions data back together again and normalise
@@ -94,7 +94,7 @@ def get_test_data(file, eof_solvers, n_eofs=5):
 
 
 def create_predictdand_data(data_sets):
-    if type(data_sets) is str:
+    if isinstance(data_sets, str):
         data_sets = [data_sets]
     Y = xr.concat([xr.open_dataset(data_path + f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
     # Convert the precip values to mm/day
