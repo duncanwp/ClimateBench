@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 from eofs.xarray import Eof
-# data_path = './data/train_val/'
-data_path = "CONFIGURE_ME"
 
 min_co2 = 0.
 max_co2 = 9500
@@ -22,7 +20,7 @@ def un_normalize_ch4(data):
     return data * max_ch4
 
 
-def create_predictor_data(data_sets, n_eofs=5):
+def create_predictor_data(data_path, data_sets, n_eofs=5):
     """
     Args:
         data_sets list(str): names of datasets
@@ -32,7 +30,7 @@ def create_predictor_data(data_sets, n_eofs=5):
     # Create training and testing arrays
     if isinstance(data_sets, str):
         data_sets = [data_sets]
-    X = xr.concat([xr.open_dataset(data_path + f"inputs_{file}.nc") for file in data_sets], dim='time')
+    X = xr.concat([xr.open_dataset(data_path / f"inputs_{file}.nc") for file in data_sets], dim='time')
     X = X.assign_coords(time=np.arange(len(X.time)))
 
     # Compute EOFs for BC
@@ -63,7 +61,7 @@ def create_predictor_data(data_sets, n_eofs=5):
     return inputs, (so2_solver, bc_solver)
 
 
-def get_test_data(file, eof_solvers, n_eofs=5):
+def create_test_data(data_path, file, eof_solvers, n_eofs=5):
     """
     Args:
         file str: name of datasets
@@ -72,7 +70,7 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     """
         
     # Create training and testing arrays
-    X = xr.open_dataset(data_path + f"inputs_{file}.nc")
+    X = xr.open_dataset(data_path / f"inputs_{file}.nc")
         
     so2_pcs = eof_solvers[0].projectField(X["SO2"], neofs=5, eofscaling=1)
     so2_df = so2_pcs.to_dataframe().unstack('mode')
@@ -93,10 +91,10 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     return inputs
 
 
-def create_predictdand_data(data_sets):
+def create_predictdand_data(data_path, data_sets):
     if isinstance(data_sets, str):
         data_sets = [data_sets]
-    Y = xr.concat([xr.open_dataset(data_path + f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
+    Y = xr.concat([xr.open_dataset(data_path / f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
     # Convert the precip values to mm/day
     Y["pr"] *= 86400
     Y["pr90"] *= 86400
@@ -106,3 +104,22 @@ def create_predictdand_data(data_sets):
 def get_rmse(truth, pred):
     weights = np.cos(np.deg2rad(truth.lat))
     return np.sqrt(((truth - pred)**2).weighted(weights).mean(['lat', 'lon'])).data
+
+
+def get_mean_rmse(truth, pred):
+    return get_rmse(truth.sel(time=slice(2080, None)).mean('time'),
+                    pred.sel(time=slice(2080, None)).mean('time'))
+
+
+def get_data(dir, file, url="https://zenodo.org/record/5787290/files/"):
+    import urllib.request
+    import tarfile
+    import os.path
+
+    data_cache = os.path.join(dir, file)
+
+    if not os.path.isfile(data_cache):
+        urllib.request.urlretrieve(url+file+"?download=1", data_cache)
+
+    with tarfile.open(data_cache) as tar:
+        tar.extractall(dir)
