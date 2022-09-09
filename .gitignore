@@ -4,6 +4,9 @@
 *.gz
 *.out
 
+*.pdf
+*.png
+
 # Dask
 dask-worker-space/
 
