@@ -8,15 +8,13 @@ A pre-print of the paper describing ClimateBench and the baseline models can be 
 
 ## Leaderboard
 
-The average root mean square error (RMSE) of the different baseline emulators for the years 2050-2100 against the ClimateBench task of estimating key climate variables under future scenario SSP245. Another state-of-the-art model (UKESM1) and the average RMSE between NorESM ensemble members as an estimate of internal variability are included for comparison.
+The spatial, global and total NRMSE of the different baseline emulators for the years 2080-2100 against the ClimateBench task of estimating key climate variables under future scenario SSP245. The models  are ranked in order of the mean of the total NRMSE across all tasks. 
 
-| Model | TAS RMSE [K] | DTR RMSE [K] | Pr RMSE [mm/day] | P90 RMSE [mm/day] | 
-|--------------------|----------------------------------|----------------------------|----------------------|------------------|
-| GP regression | 0.36 (CRPS: 0.33) | 0.15 (CRPS: 0.12) | 0.53 (CRPS: 0.42) | 1.54 (CRPS: 1.27) |
-| CNN+LSTM | 0.38 | 0.17 | 0.58 | 1.64 |
-| Random Forest | 0.42 | 0.15 | 0.53 | 1.54 |
-| UKESM | 2.20 | 1.28 | 0.89 | 2.57 |
-| (Variability) | 0.80 | 0.31 | 1.20 | 3.52 |
+|                  |   ('tas', 'Spatial') |   ('tas', 'Global') |   ('tas', 'Total') |   ('diurnal_temperature_range', 'Spatial') |   ('diurnal_temperature_range', 'Global') |   ('diurnal_temperature_range', 'Total') |   ('pr', 'Spatial') |   ('pr', 'Global') |   ('pr', 'Total') |   ('pr90', 'Spatial') |   ('pr90', 'Global') |   ('pr90', 'Total') |
+|------------------|----------------------|---------------------|--------------------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------|--------------------|-------------------|-----------------------|----------------------|---------------------|
+| Neural Network   |             0.107294 |           0.0440271 |           0.327429 |                                    9.91735 |                                   1.37219 |                                  16.7783 |             2.1281  |           0.2093   |           3.1746  |               2.61022 |             0.345709 |             4.33876 |
+| Gaussian Process |             0.109106 |           0.0738238 |           0.478225 |                                    9.20713 |                                   2.67495 |                                  22.5819 |             2.34092 |           0.341453 |           4.04818 |               2.5559  |             0.429154 |             4.70167 |
+| Random Forest    |             0.107574 |           0.0584057 |           0.399602 |                                    9.19503 |                                   2.65241 |                                  22.4571 |             2.52431 |           0.502126 |           5.03494 |               2.68209 |             0.543375 |             5.39896 |
 
 
 ## Installation
