@@ -4,7 +4,7 @@ ClimateBench is a benchmark dataset for climate model emulation inspired by [Wea
 
 The processed training, validation and test data can be obtained from Zenodo: [10.5281/zenodo.5196512](https://doi.org/10.5281/zenodo.5196512).
 
-A pre-print of the paper describing ClimateBench and the baseline models can be found here: <https://www.essoar.org/doi/10.1002/essoar.10509765.2>
+The ClimateBench Paper was published in [AGU JAMES](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2021MS002954) on September 2022.
 
 ## Leaderboard
 
